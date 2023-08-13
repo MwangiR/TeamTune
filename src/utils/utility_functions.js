@@ -1,6 +1,11 @@
 const inquirer = require("inquirer");
 // const connection = require("./dbconnect");
-const { viewAllDepartments, viewAllRoles, viewAllEmployees } = require("./funcHelpers");
+const {
+  viewAllDepartments,
+  viewAllRoles,
+  viewAllEmployees,
+  includeDepartment,
+} = require("./funcHelpers");
 
 // Inquirer prompts
 const promptUser = () => {
@@ -34,19 +39,27 @@ const promptUser = () => {
         viewAllEmployees(() => {
           promptUser();
         });
+      } else if (answers.choice === "Add a department") {
+        addDepartment();
       }
     });
 };
 
 // Add a Department
 const addDepartment = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "department",
-      message: "What department would you like to add?",
-    },
-  ]);
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "department",
+        message: "What department would you like to add?",
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      includeDepartment(answers);
+      promptUser();
+    });
 };
 // Add a Role
 const addRole = () => {
