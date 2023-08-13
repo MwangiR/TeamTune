@@ -5,6 +5,7 @@ const {
   viewAllRoles,
   viewAllEmployees,
   includeDepartment,
+  includeRole,
 } = require("./funcHelpers");
 
 // Inquirer prompts
@@ -41,6 +42,8 @@ const promptUser = () => {
         });
       } else if (answers.choice === "Add a department") {
         addDepartment();
+      } else if (answers.choice === "Add a role") {
+        addRole();
       }
     });
 };
@@ -63,23 +66,39 @@ const addDepartment = () => {
 };
 // Add a Role
 const addRole = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "title",
-      message: "What is the title of the role?",
-    },
-    {
-      type: "input",
-      name: "salary",
-      message: "What is the salary of the role?",
-    },
-    {
-      type: "input",
-      name: "department_id",
-      message: "What is the department ID of the role?",
-    },
-  ]);
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the title of the role?",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the salary of the role?",
+      },
+      {
+        type: "input",
+        name: "department_id",
+        message: "What is the department ID of the role?",
+      },
+      {
+        type: "confirm",
+        name: "confirmAdd",
+        message:
+          "Confirm adding role? (Please note that a role can only be added to listed departments)",
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      if (answers.confirmAdd === true) {
+        includeRole(answers);
+        promptUser();
+      } else {
+        promptUser();
+      }
+    });
 };
 
 // Add an Employee
