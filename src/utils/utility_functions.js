@@ -37,31 +37,7 @@ const promptUser = () => {
       }
     });
 };
-// View All Departments
-// const viewAllDepartments = () => {
-//   connection.query("SELECT * FROM department", (err, results) => {
-//     if (err) throw err;
-//     console.log("Function accessed");
-//     console.table(results);
-//     promptUser();
-//   });
-// };
-// // View All Roles
-// const viewAllRoles = () => {
-//   connection.query("SELECT * FROM role", (err, results) => {
-//     if (err) throw err;
-//     console.table(results);
-//     promptUser();
-//   });
-// };
-// // View All Employees
-// const viewAllEmployees = () => {
-//   connection.query("SELECT * FROM employee", (err, results) => {
-//     if (err) throw err;
-//     console.table(results);
-//     promptUser();
-//   });
-// };
+
 // Add a Department
 const addDepartment = () => {
   return inquirer.prompt([

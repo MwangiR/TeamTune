@@ -1,5 +1,4 @@
 const connection = require("./dbconnect");
-const { promptUser } = require("./utility_functions");
 
 // View All Departments
 const viewAllDepartments = (callback) => {
