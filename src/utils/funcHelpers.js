@@ -39,9 +39,21 @@ const includeDepartment = (newDP) => {
   );
 };
 
+//add a role
+const includeRole = (newRole) => {
+  dbConnection.query(
+    `INSERT INTO role (title, salary, department_id) VALUES ('${newRole.title}', '${newRole.salary}', '${newRole.department_id}')`,
+    (err, results) => {
+      if (err) throw err;
+      console.info(`${newRole.title} added.`);
+    },
+  );
+};
+
 module.exports = {
   viewAllDepartments,
   viewAllRoles,
   viewAllEmployees,
   includeDepartment,
+  includeRole,
 };
