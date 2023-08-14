@@ -6,6 +6,7 @@ const {
   viewAllEmployees,
   includeDepartment,
   includeRole,
+  includeEmployee,
 } = require("./funcHelpers");
 
 // Inquirer prompts
@@ -24,6 +25,7 @@ const promptUser = () => {
           "Add a role",
           "Add an employee",
           "Update an employee role",
+          "Exit",
         ],
       },
     ])
@@ -44,6 +46,10 @@ const promptUser = () => {
         addDepartment();
       } else if (answers.choice === "Add a role") {
         addRole();
+      } else if (answers.choice === "Add an employee") {
+        addEmployee();
+      } else if (answers.choice === "Exit") {
+        process.exit();
       }
     });
 };
@@ -87,7 +93,7 @@ const addRole = () => {
         type: "confirm",
         name: "confirmAdd",
         message:
-          "Confirm adding role? (Please note that a role can only be added to listed departments)",
+          "Confirm adding role? (Please note that a role can only be added to max listed departments)",
       },
     ])
     .then((answers) => {
@@ -103,28 +109,50 @@ const addRole = () => {
 
 // Add an Employee
 const addEmployee = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "first_name",
-      message: "What is the first name of the employee?",
-    },
-    {
-      type: "input",
-      name: "last_name",
-      message: "What is the last name of the employee?",
-    },
-    {
-      type: "input",
-      name: "role_id",
-      message: "What is the role ID of the employee?",
-    },
-    {
-      type: "input",
-      name: "manager_id",
-      message: "What is the manager ID of the employee?",
-    },
-  ]);
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "What is the first name of the employee?",
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "What is the last name of the employee?",
+      },
+      {
+        type: "input",
+        name: "role_id",
+        message: "What is the role ID of the employee?",
+      },
+      {
+        type: "input",
+        name: "manager_id",
+        message: "What is the manager ID of the employee?",
+      },
+      {
+        type: "confirm",
+        name: "confirmAdd",
+        message:
+          "Confirm adding employee? (Please note that a managerID can only be added to max listed departments)",
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+
+      // Handle empty manager_id input
+      if (answers.manager_id.trim() === "") {
+        answers.manager_id = null;
+      }
+
+      if (answers.confirmAdd === true) {
+        includeEmployee(answers);
+        promptUser();
+      } else {
+        promptUser();
+      }
+    });
 };
 
 // Update an Employee Role
