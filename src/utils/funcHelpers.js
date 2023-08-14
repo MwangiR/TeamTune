@@ -50,10 +50,23 @@ const includeRole = (newRole) => {
   );
 };
 
+//add an employee
+const includeEmployee = (newEmp) => {
+  const sql =
+    "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+  const values = [newEmp.first_name, newEmp.last_name, newEmp.role_id, newEmp.manager_id];
+
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.info(`${newEmp.first_name} added.`);
+  });
+};
+
 module.exports = {
   viewAllDepartments,
   viewAllRoles,
   viewAllEmployees,
   includeDepartment,
   includeRole,
+  includeEmployee,
 };
