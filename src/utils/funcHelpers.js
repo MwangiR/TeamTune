@@ -2,7 +2,8 @@ const dbConnection = require("./dbconnect");
 
 // View All Departments
 const viewAllDepartments = (callback) => {
-  dbConnection.query("SELECT * FROM department", (err, results) => {
+  const sqlQuery = "SELECT * FROM department";
+  dbConnection.query(sql, (err, results) => {
     if (err) throw err;
     console.table(results);
     // promptUser();
@@ -12,7 +13,8 @@ const viewAllDepartments = (callback) => {
 
 // View All Roles
 const viewAllRoles = (callback) => {
-  dbConnection.query("SELECT * FROM role", (err, results) => {
+  const sql = "SELECT * FROM role";
+  dbConnection.query(sql, (err, results) => {
     if (err) throw err;
     console.table(results);
     callback();
@@ -21,7 +23,8 @@ const viewAllRoles = (callback) => {
 
 // View All Employees
 const viewAllEmployees = (callback) => {
-  dbConnection.query("SELECT * FROM employee", (err, results) => {
+  const sql = "SELECT * FROM employee";
+  dbConnection.query(sql, (err, results) => {
     if (err) throw err;
     console.table(results);
     callback();
@@ -30,24 +33,22 @@ const viewAllEmployees = (callback) => {
 
 //add a department
 const includeDepartment = (newDP) => {
-  dbConnection.query(
-    `INSERT INTO department (name) VALUES ('${newDP.department}')`,
-    (err, results) => {
-      if (err) throw err;
-      console.info(`${newDP.name} added.`);
-    },
-  );
+  const sql = "INSERT INTO department (name) VALUES (?)";
+  const values = [newDP.department];
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.info(`${newDP.name} added.`);
+  });
 };
 
 //add a role
 const includeRole = (newRole) => {
-  dbConnection.query(
-    `INSERT INTO role (title, salary, department_id) VALUES ('${newRole.title}', '${newRole.salary}', '${newRole.department_id}')`,
-    (err, results) => {
-      if (err) throw err;
-      console.info(`${newRole.title} added.`);
-    },
-  );
+  const sql = "INSERT INTO role (title, salary, department_id) VALUES (?,?,?)";
+  const values = [newRole.title, newRole.salary, newRole.department_id];
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.info(`${newRole.title} added.`);
+  });
 };
 
 //add an employee
