@@ -73,6 +73,16 @@ const roleUpdate = (updateEmp) => {
   });
 };
 
+//update employee manager
+const managerUpdate = (updateEmp) => {
+  const sql = "UPDATE employee SET manager_id = ? WHERE first_name = ? AND last_name = ?";
+  const values = [updateEmp.manager_id, updateEmp.first_name, updateEmp.last_name];
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.info(`${updateEmp.first_name} updated.`);
+  });
+};
+
 module.exports = {
   viewAllDepartments,
   viewAllRoles,
@@ -81,4 +91,5 @@ module.exports = {
   includeRole,
   includeEmployee,
   roleUpdate,
+  managerUpdate,
 };
