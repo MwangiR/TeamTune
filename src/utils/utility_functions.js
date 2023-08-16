@@ -7,6 +7,7 @@ const {
   includeDepartment,
   includeRole,
   includeEmployee,
+  roleUpdate,
 } = require("./funcHelpers");
 
 // Inquirer prompts
@@ -48,6 +49,8 @@ const promptUser = () => {
         addRole();
       } else if (answers.choice === "Add an employee") {
         addEmployee();
+      } else if (answers.choice === "Update an employee role") {
+        updateEmployeeRole();
       } else if (answers.choice === "Exit") {
         process.exit();
       }
@@ -157,23 +160,38 @@ const addEmployee = () => {
 
 // Update an Employee Role
 const updateEmployeeRole = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "first_name",
-      message: "What is the first name of the employee?",
-    },
-    {
-      type: "input",
-      name: "last_name",
-      message: "What is the last name of the employee?",
-    },
-    {
-      type: "input",
-      name: "role_id",
-      message: "What is the role ID of the employee?",
-    },
-  ]);
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "What is the first name of the employee?",
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "What is the last name of the employee?",
+      },
+      {
+        type: "input",
+        name: "role_id",
+        message: "What is the role ID of the employee?",
+      },
+      {
+        type: "confirm",
+        name: "confirmAdd",
+        message:
+          "Confirm updating employee role? (Please note that a roleID can only be added to max listed roles)",
+      },
+    ])
+    .then((answers) => {
+      if (answers.confirmAdd === true) {
+        roleUpdate(answers);
+        promptUser();
+      } else {
+        promptUser();
+      }
+    });
 };
 
 // Function to call inquirer prompts
