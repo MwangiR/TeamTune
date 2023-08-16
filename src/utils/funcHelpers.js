@@ -2,7 +2,7 @@ const dbConnection = require("./dbconnect");
 
 // View All Departments
 const viewAllDepartments = (callback) => {
-  const sqlQuery = "SELECT * FROM department";
+  const sql = "SELECT * FROM department";
   dbConnection.query(sql, (err, results) => {
     if (err) throw err;
     console.table(results);
@@ -63,6 +63,16 @@ const includeEmployee = (newEmp) => {
   });
 };
 
+//update employee role
+const roleUpdate = (updateEmp) => {
+  const sql = "UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ?";
+  const values = [updateEmp.role_id, updateEmp.first_name, updateEmp.last_name];
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.info(`${updateEmp.first_name} updated.`);
+  });
+};
+
 module.exports = {
   viewAllDepartments,
   viewAllRoles,
@@ -70,4 +80,5 @@ module.exports = {
   includeDepartment,
   includeRole,
   includeEmployee,
+  roleUpdate,
 };
