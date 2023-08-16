@@ -9,6 +9,7 @@ const {
   includeEmployee,
   roleUpdate,
   managerUpdate,
+  viewByManager,
 } = require("./funcHelpers");
 
 // Inquirer prompts
@@ -28,6 +29,7 @@ const promptUser = () => {
           "Add an employee",
           "Update an employee role",
           "Update employee manager",
+          "View employees by manager",
           "Exit",
         ],
       },
@@ -55,6 +57,8 @@ const promptUser = () => {
         updateEmployeeRole();
       } else if (answers.choice === "Update employee manager") {
         employeeManagerUpdate();
+      } else if (answers.choice === "View employees by manager") {
+        employeeByManager();
       } else if (answers.choice === "Exit") {
         process.exit();
       }
@@ -224,6 +228,23 @@ const employeeManagerUpdate = () => {
         answers.manager_id = null;
       }
       managerUpdate(answers);
+      promptUser();
+    });
+};
+
+// View All Employees by manager
+const employeeByManager = (manager) => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "manager",
+        message: "What is the manager ID of the employee?",
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      viewByManager(answers.manager);
       promptUser();
     });
 };

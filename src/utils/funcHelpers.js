@@ -83,6 +83,19 @@ const managerUpdate = (updateEmp) => {
   });
 };
 
+//view employees by manager
+const viewByManager = (mng) => {
+  const managerid = parseInt(mng);
+  const sql =
+    "SELECT CONCAT (first_name,' ',last_name) AS employee_name FROM employee WHERE manager_id = ?";
+  const values = [managerid];
+  dbConnection.query(sql, values, (err, results) => {
+    if (err) throw err;
+    console.table(results);
+  });
+};
+
+//exports
 module.exports = {
   viewAllDepartments,
   viewAllRoles,
@@ -92,4 +105,5 @@ module.exports = {
   includeEmployee,
   roleUpdate,
   managerUpdate,
+  viewByManager,
 };
