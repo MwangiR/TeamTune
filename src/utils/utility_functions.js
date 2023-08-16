@@ -8,6 +8,7 @@ const {
   includeRole,
   includeEmployee,
   roleUpdate,
+  managerUpdate,
 } = require("./funcHelpers");
 
 // Inquirer prompts
@@ -26,6 +27,7 @@ const promptUser = () => {
           "Add a role",
           "Add an employee",
           "Update an employee role",
+          "Update employee manager",
           "Exit",
         ],
       },
@@ -51,6 +53,8 @@ const promptUser = () => {
         addEmployee();
       } else if (answers.choice === "Update an employee role") {
         updateEmployeeRole();
+      } else if (answers.choice === "Update employee manager") {
+        employeeManagerUpdate();
       } else if (answers.choice === "Exit") {
         process.exit();
       }
@@ -191,6 +195,36 @@ const updateEmployeeRole = () => {
       } else {
         promptUser();
       }
+    });
+};
+
+//update employee manager
+const employeeManagerUpdate = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "What is the first name of the employee?",
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "What is the last name of the employee?",
+      },
+      {
+        type: "input",
+        name: "manager_id",
+        message: "What is the manager ID of the employee?",
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      if (answers.manager_id.trim() === "") {
+        answers.manager_id = null;
+      }
+      managerUpdate(answers);
+      promptUser();
     });
 };
 
