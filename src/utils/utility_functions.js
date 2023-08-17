@@ -140,9 +140,8 @@ const addEmployee = () => {
       {
         type: "input",
         name: "manager_id",
-        message: "What is the manager ID of the employee?",
-        default:
-          "Press enter to leave it empty to set employee as manager. Will appear as null in database",
+        message:
+          "What is the manager ID of the employee?(leave empty string to set manager id to null)",
       },
       {
         type: "confirm",
